@@ -10,7 +10,6 @@ import Work from './components/Work'
 import About from './components/About'
 import Services from './components/Services'
 import Process from './components/Process'
-import Pricing from './components/Pricing'
 import Testimonials from './components/Testimonials'
 import CTA from './components/CTA'
 import Contact from './components/Contact'
@@ -38,7 +37,6 @@ export default function App() {
         <About />
         <Services />
         <Process />
-        <Pricing />
         <Testimonials />
         <CTA />
         <Contact />

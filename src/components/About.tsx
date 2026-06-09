@@ -77,7 +77,7 @@ export default function About() {
           >
             <div className="relative aspect-[4/5] rounded-2xl overflow-hidden">
               <img
-                src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=600&q=80"
+                src={personalInfo.avatar}
                 alt={personalInfo.name}
                 className="w-full h-full object-cover"
               />
@@ -152,11 +152,9 @@ export default function About() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.15 }}
-                className={`relative flex items-start gap-8 mb-12 ${
-                  i % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
-                }`}
+                className="relative flex items-start gap-8 mb-12 md:flex-row"
               >
-                <div className={`flex-1 ${i % 2 === 0 ? 'md:text-right' : 'md:text-left'} hidden md:block`}>
+                <div className="flex-1 md:text-right hidden md:block">
                   {i % 2 === 0 && (
                     <div className="glass-card p-6 inline-block text-left">
                       <span className="text-cinema-accent font-mono text-sm">{item.year}</span>
@@ -169,7 +167,7 @@ export default function About() {
 
                 <div className="absolute left-8 md:left-1/2 w-4 h-4 rounded-full bg-cinema-accent border-4 border-cinema-dark -translate-x-1/2 mt-2 z-10" />
 
-                <div className={`flex-1 pl-16 md:pl-0 ${i % 2 !== 0 ? 'md:text-right' : ''}`}>
+                <div className="flex-1 pl-16 md:pl-0 md:text-left">
                   <div className="glass-card p-6 md:hidden">
                     <span className="text-cinema-accent font-mono text-sm">{item.year}</span>
                     <h4 className="font-display text-xl tracking-wider uppercase mt-1">{item.title}</h4>

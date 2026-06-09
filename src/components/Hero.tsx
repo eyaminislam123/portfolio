@@ -36,82 +36,116 @@ export default function Hero() {
         ))}
       </div>
 
-      <motion.div style={{ opacity }} className="relative z-10 section-padding text-center max-w-5xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.4 }}
-          className="flex items-center justify-center gap-3 mb-6"
-        >
-          <Film size={16} className="text-cinema-accent" />
-          <span className="section-subtitle">{personalInfo.title}</span>
-        </motion.div>
-
-        <motion.h1
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 1.6, ease: [0.76, 0, 0.24, 1] }}
-          className="font-display text-6xl sm:text-7xl md:text-8xl lg:text-9xl tracking-wider leading-[0.9] mb-6 text-primary"
-        >
-          <span className="block">{personalInfo.name.split(' ')[0].toUpperCase()}</span>
-          <span className="block gradient-text">{personalInfo.name.split(' ')[1]?.toUpperCase()}</span>
-        </motion.h1>
-
-        <motion.p
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.8 }}
-          className="text-lg md:text-xl text-cinema-light max-w-2xl mx-auto mb-10 font-light"
-        >
-          {personalInfo.tagline}
-        </motion.p>
-
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 2 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4"
-        >
-          <a
-            href="#work"
-            className="group flex items-center gap-3 px-8 py-4 bg-cinema-accent text-white rounded-full hover:opacity-90 transition-all hover:scale-105"
-            data-cursor="pointer"
-          >
-            <Play size={18} fill="currentColor" />
-            <span className="uppercase tracking-wider text-sm font-medium">View Showreel</span>
-          </a>
-          <a
-            href="#contact"
-            className="flex items-center gap-3 px-8 py-4 border border-cinema-gray rounded-full hover:border-cinema-accent hover:text-cinema-accent transition-all text-primary"
-            data-cursor="pointer"
-          >
-            <span className="uppercase tracking-wider text-sm font-medium">Get In Touch</span>
-          </a>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 2.5 }}
-          className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto"
-        >
-          {personalInfo.stats.map((stat, i) => (
+      <motion.div style={{ opacity }} className="relative z-10 section-padding max-w-7xl mx-auto w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+          <div className="lg:col-span-7 flex flex-col items-center lg:items-start justify-center">
             <motion.div
-              key={stat.label}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 2.5 + i * 0.1 }}
-              className="text-center"
+              transition={{ duration: 0.8, delay: 1.4 }}
+              className="flex items-center gap-3 mb-6"
             >
-              <div className="font-display text-3xl md:text-4xl text-cinema-accent mb-1">
-                {stat.value}
-              </div>
-              <div className="text-xs text-cinema-muted uppercase tracking-wider">
-                {stat.label}
-              </div>
+              <Film size={16} className="text-cinema-accent" />
+              <span className="section-subtitle">{personalInfo.title}</span>
             </motion.div>
-          ))}
-        </motion.div>
+
+            <motion.h1
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: 1.6, ease: [0.76, 0, 0.24, 1] }}
+              className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl tracking-wider leading-[0.95] mb-6 text-primary text-center lg:text-left"
+            >
+              <span className="block">{personalInfo.name.split(' ')[0].toUpperCase()}</span>
+              <span className="block gradient-text">{personalInfo.name.split(' ')[1]?.toUpperCase()}</span>
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 1.8 }}
+              className="text-lg text-cinema-light max-w-2xl lg:max-w-none mb-10 font-light text-center lg:text-left"
+            >
+              {personalInfo.tagline}
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 2 }}
+              className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto"
+            >
+              <a
+                href="#work"
+                className="group flex items-center justify-center gap-3 px-8 py-4 bg-cinema-accent text-white rounded-full hover:opacity-90 transition-all hover:scale-105 w-full sm:w-auto"
+                data-cursor="pointer"
+              >
+                <Play size={18} fill="currentColor" />
+                <span className="uppercase tracking-wider text-sm font-medium">View Showreel</span>
+              </a>
+              <a
+                href="#contact"
+                className="flex items-center justify-center gap-3 px-8 py-4 border border-cinema-gray rounded-full hover:border-cinema-accent hover:text-cinema-accent transition-all text-primary w-full sm:w-auto"
+                data-cursor="pointer"
+              >
+                <span className="uppercase tracking-wider text-sm font-medium">Get In Touch</span>
+              </a>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1, delay: 2.5 }}
+              className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 w-full"
+            >
+              {personalInfo.stats.map((stat, i) => (
+                <motion.div
+                  key={stat.label}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 2.5 + i * 0.1 }}
+                  className="text-center lg:text-left"
+                >
+                  <div className="font-display text-3xl text-cinema-accent mb-1">
+                    {stat.value}
+                  </div>
+                  <div className="text-[10px] text-cinema-muted uppercase tracking-wider">
+                    {stat.label}
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+
+          <div className="lg:col-span-5 flex justify-center items-center relative mt-10 lg:mt-0">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1, delay: 1.8 }}
+              className="relative w-full max-w-[380px] aspect-[4/5]"
+            >
+              <div className="absolute -inset-4 bg-gradient-to-tr from-cinema-accent/30 to-cinema-gold/10 rounded-2xl blur-2xl opacity-50 -z-10 animate-pulse" />
+              
+              <div className="relative w-full h-full rounded-2xl overflow-hidden border border-cinema-gray bg-cinema-dark p-3">
+                <div className="relative w-full h-full rounded-xl overflow-hidden">
+                  <img
+                    src={personalInfo.avatar}
+                    alt={personalInfo.name}
+                    className="w-full h-full object-cover object-center scale-105 hover:scale-110 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-cinema-dark/85 via-cinema-dark/20 to-transparent" />
+                </div>
+                
+                <div className="absolute top-6 left-6 w-4 h-4 border-t-2 border-l-2 border-cinema-accent/65 rounded-tl-sm pointer-events-none" />
+                <div className="absolute top-6 right-6 w-4 h-4 border-t-2 border-r-2 border-cinema-accent/65 rounded-tr-sm pointer-events-none" />
+                <div className="absolute bottom-6 left-6 w-4 h-4 border-b-2 border-l-2 border-cinema-accent/65 rounded-bl-sm pointer-events-none" />
+                <div className="absolute bottom-6 right-6 w-4 h-4 border-b-2 border-r-2 border-cinema-accent/65 rounded-br-sm pointer-events-none" />
+              </div>
+
+              <div className="absolute -bottom-4 -left-4 w-20 h-20 border border-cinema-accent/20 rounded-2xl -z-10" />
+              <div className="absolute -top-4 -right-4 w-16 h-16 bg-gradient-to-tr from-cinema-accent/10 to-cinema-gold/10 rounded-2xl -z-10" />
+            </motion.div>
+          </div>
+        </div>
       </motion.div>
 
       <motion.div

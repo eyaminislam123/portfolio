@@ -28,9 +28,6 @@ export default function Process() {
               transition={{ delay: i * 0.1 }}
               className="relative group"
             >
-              <div className="font-display text-7xl text-cinema-muted/[0.08] dark:text-white/[0.03] absolute -top-4 -left-2 group-hover:text-cinema-accent/10 transition-colors">
-                {step.step}
-              </div>
               <div className="relative glass-card p-8 h-full hover-lift">
                 <span className="font-mono text-sm text-cinema-accent tracking-wider">
                   STEP {step.step}

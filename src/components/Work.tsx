@@ -8,7 +8,7 @@ const categories = ['All', ...Array.from(new Set(projects.map((p) => p.category)
 function ProjectCard({ project, index, onSelect }: { project: Project; index: number; onSelect: (p: Project) => void }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 40 }}
+      initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-50px' }}
       transition={{ duration: 0.6, delay: index * 0.1 }}
@@ -51,71 +51,163 @@ function ProjectCard({ project, index, onSelect }: { project: Project; index: nu
 }
 
 function ProjectModal({ project, onClose }: { project: Project; onClose: () => void }) {
+  const [isPlaying, setIsPlaying] = useState(false)
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-[200] flex items-center justify-center p-4 md:p-8"
+      className="fixed inset-0 z-[200] flex items-center justify-center p-4 md:p-8 overflow-y-auto"
       onClick={onClose}
     >
-      <div className="absolute inset-0 bg-cinema-black/90 backdrop-blur-xl" />
+      <div className="absolute inset-0 bg-cinema-black/95 backdrop-blur-xl" />
       <motion.div
-        initial={{ opacity: 0, scale: 0.9, y: 20 }}
+        initial={{ opacity: 0, scale: 0.95, y: 30 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.9, y: 20 }}
-        transition={{ duration: 0.4, ease: [0.76, 0, 0.24, 1] }}
-        className="relative w-full max-w-4xl glass-card overflow-hidden"
+        exit={{ opacity: 0, scale: 0.95, y: 30 }}
+        transition={{ duration: 0.5, ease: [0.76, 0, 0.24, 1] }}
+        className="relative w-full max-w-4xl glass-card overflow-hidden my-8"
         onClick={(e) => e.stopPropagation()}
       >
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center hover:bg-cinema-accent transition-colors text-white"
-          data-cursor="pointer"
-        >
-          <X size={20} />
-        </button>
-
-        <div className="relative aspect-video">
-          <img src={project.thumbnail} alt={project.title} className="w-full h-full object-cover" />
-          <div className="absolute inset-0 flex items-center justify-center bg-black/40">
-            <div className="w-20 h-20 rounded-full bg-cinema-accent/90 flex items-center justify-center cursor-pointer hover:scale-110 transition-transform">
-              <Play size={32} fill="white" className="text-white ml-1" />
+        {/* Header Section */}
+        <div className="p-6 md:p-8 pb-5 flex items-start justify-between gap-6 border-b border-cinema-gray bg-cinema-dark/20">
+          <div>
+            <div className="flex flex-wrap items-center gap-3 mb-2">
+              <span className="text-xs uppercase tracking-wider text-cinema-accent font-mono px-2.5 py-0.5 bg-cinema-accent/10 rounded-full">
+                {project.category}
+              </span>
+              <span className="text-sm text-cinema-muted font-medium">{project.client} — {project.year}</span>
             </div>
+            <h2 className="font-display text-3xl sm:text-4xl tracking-wider uppercase text-primary leading-tight">
+              {project.title}
+            </h2>
+          </div>
+
+          <button
+            onClick={onClose}
+            className="w-10 h-10 rounded-full bg-cinema-dark border border-cinema-gray flex items-center justify-center hover:bg-cinema-accent hover:text-white hover:border-cinema-accent transition-all duration-300 shrink-0"
+            data-cursor="pointer"
+            aria-label="Close modal"
+          >
+            <X size={20} />
+          </button>
+        </div>
+
+        {/* Video Player Section - Moved below header */}
+        <div className="p-6 md:p-8 pb-4">
+          <div className="relative aspect-video bg-black rounded-xl overflow-hidden border border-cinema-gray shadow-inner">
+            {isPlaying ? (
+              <iframe
+                src={`${project.videoUrl || 'https://www.youtube.com/embed/LXb3EKWsInQ'}?autoplay=1&rel=0`}
+                title={project.title}
+                className="w-full h-full border-0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            ) : (
+              <div className="relative w-full h-full">
+                <img
+                  src={project.thumbnail}
+                  alt={project.title}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 flex items-center justify-center bg-black/50 transition-colors duration-300 hover:bg-black/65">
+                  {/* Glowing Play Button */}
+                  <button
+                    onClick={() => setIsPlaying(true)}
+                    className="group relative w-20 h-20 rounded-full bg-cinema-accent flex items-center justify-center cursor-pointer shadow-lg shadow-cinema-accent/30 hover:scale-110 active:scale-95 transition-all duration-300"
+                    data-cursor="pointer"
+                  >
+                    <div className="absolute -inset-3 bg-cinema-accent/20 rounded-full blur-md opacity-0 group-hover:opacity-100 transition-opacity animate-pulse" />
+                    <Play size={28} fill="white" className="text-white ml-1.5 transition-transform duration-300 group-hover:scale-110" />
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
-        <div className="p-8">
-          <div className="flex flex-wrap items-center gap-4 mb-4">
-            <span className="text-xs uppercase tracking-wider text-cinema-accent font-mono px-3 py-1 bg-cinema-accent/10 rounded-full">
-              {project.category}
-            </span>
-            <span className="text-sm text-cinema-muted">{project.client} — {project.year}</span>
-            <span className="text-sm text-cinema-muted flex items-center gap-1">
-              <Clock size={14} /> {project.duration}
-            </span>
+        {/* Content Section - Grid Layout */}
+        <div className="p-6 md:p-8 pt-2">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+            {/* Left: Main details */}
+            <div className="md:col-span-2 space-y-6">
+              <div className="space-y-3">
+                <h4 className="text-xs uppercase tracking-widest text-cinema-accent font-semibold font-mono">Project Overview</h4>
+                <p className="text-cinema-light leading-relaxed text-base">
+                  {project.description}
+                </p>
+              </div>
+
+              {/* Tags */}
+              <div className="space-y-3">
+                <h4 className="text-xs uppercase tracking-widest text-cinema-muted font-semibold font-mono">Skills & Tools</h4>
+                <div className="flex flex-wrap gap-2">
+                  {project.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="text-xs px-3 py-1 border border-cinema-gray bg-cinema-dark/25 rounded-full text-cinema-muted font-medium hover:border-cinema-accent/30 transition-colors"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Right: Meta specifications column */}
+            <div className="md:col-span-1">
+              <div className="bg-cinema-dark/60 border border-cinema-gray rounded-2xl p-5 space-y-4 shadow-sm backdrop-blur-sm">
+                <div>
+                  <span className="text-[10px] text-cinema-muted uppercase tracking-widest block mb-1 font-mono font-bold">Client</span>
+                  <span className="text-sm font-semibold text-primary">{project.client}</span>
+                </div>
+                <div className="h-px bg-cinema-gray" />
+                <div>
+                  <span className="text-[10px] text-cinema-muted uppercase tracking-widest block mb-1 font-mono font-bold">Release Year</span>
+                  <span className="text-sm font-semibold text-primary">{project.year}</span>
+                </div>
+                <div className="h-px bg-cinema-gray" />
+                <div>
+                  <span className="text-[10px] text-cinema-muted uppercase tracking-widest block mb-1 font-mono font-bold">Duration</span>
+                  <span className="text-sm font-semibold text-primary flex items-center gap-1.5">
+                    <Clock size={14} className="text-cinema-accent" />
+                    {project.duration}
+                  </span>
+                </div>
+                <div className="h-px bg-cinema-gray" />
+                <div>
+                  <span className="text-[10px] text-cinema-muted uppercase tracking-widest block mb-1 font-mono font-bold">Role</span>
+                  <span className="text-xs uppercase tracking-wider text-cinema-accent font-semibold font-mono inline-block px-2.5 py-0.5 bg-cinema-accent/10 rounded-full">
+                    {project.category}
+                  </span>
+                </div>
+              </div>
+
+              {/* View Full Project Link */}
+              <div className="mt-5">
+                <a
+                  href={project.videoUrl || "https://youtube.com"}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full flex items-center justify-center gap-2.5 px-6 py-3.5 bg-cinema-accent hover:opacity-95 text-white text-xs uppercase tracking-wider font-semibold rounded-xl transition-all shadow-md shadow-cinema-accent/20 hover:scale-[1.02] active:scale-[0.98]"
+                  data-cursor="pointer"
+                >
+                  <ExternalLink size={14} />
+                  <span>View Full Project</span>
+                </a>
+              </div>
+            </div>
+
           </div>
-
-          <h2 className="font-display text-4xl tracking-wider uppercase mb-4">{project.title}</h2>
-          <p className="text-cinema-light leading-relaxed mb-6">{project.description}</p>
-
-          <div className="flex flex-wrap gap-2 mb-6">
-            {project.tags.map((tag) => (
-              <span key={tag} className="text-xs px-3 py-1 border border-cinema-gray rounded-full text-cinema-muted">
-                {tag}
-              </span>
-            ))}
-          </div>
-
-          <button className="flex items-center gap-2 text-cinema-accent hover:opacity-80 transition-opacity" data-cursor="pointer">
-            <ExternalLink size={16} />
-            <span className="text-sm uppercase tracking-wider">View Full Project</span>
-          </button>
         </div>
       </motion.div>
     </motion.div>
   )
 }
+
 
 export default function Work() {
   const [activeCategory, setActiveCategory] = useState('All')
@@ -147,11 +239,10 @@ export default function Work() {
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`px-5 py-2 rounded-full text-sm uppercase tracking-wider transition-all ${
-                activeCategory === cat
-                  ? 'bg-cinema-accent text-white'
-                  : 'border border-cinema-gray text-cinema-muted hover:border-cinema-accent hover:text-cinema-accent'
-              }`}
+              className={`px-5 py-2 rounded-full text-sm uppercase tracking-wider transition-all ${activeCategory === cat
+                ? 'bg-cinema-accent text-white'
+                : 'border border-cinema-gray text-cinema-muted hover:border-cinema-accent hover:text-cinema-accent'
+                }`}
               data-cursor="pointer"
             >
               {cat}
