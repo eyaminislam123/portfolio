@@ -1,0 +1,182 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===== THEME VARIABLES ===== */
+:root {
+  --cinema-black: #ffffff;
+  --cinema-dark: #f4f5f7;
+  --cinema-gray: #e5e7eb;
+  --cinema-muted: #6b7280;
+  --cinema-light: #374151;
+  --cinema-accent: #4f46e5;
+  --cinema-gold: #d97706;
+  --text-primary: #111827;
+  --text-inverted: #f9fafb;
+  --glass-bg: rgba(255, 255, 255, 0.65);
+  --glass-border: rgba(0, 0, 0, 0.06);
+  --overlay-from: rgba(255, 255, 255, 0.85);
+  --overlay-via: rgba(255, 255, 255, 0.5);
+  --overlay-to: #ffffff;
+  --input-bg: rgba(0, 0, 0, 0.03);
+  --input-border: rgba(0, 0, 0, 0.1);
+  --scrollbar-track: #f4f5f7;
+  --scrollbar-thumb: #4f46e5;
+  --grain-opacity: 0.015;
+  color-scheme: light;
+}
+
+.dark {
+  --cinema-black: #0c0c0f;
+  --cinema-dark: #141418;
+  --cinema-gray: #1e1e24;
+  --cinema-muted: #9ca3af;
+  --cinema-light: #d1d5db;
+  --cinema-accent: #6366f1;
+  --cinema-gold: #f59e0b;
+  --text-primary: #f9fafb;
+  --text-inverted: #111827;
+  --glass-bg: rgba(255, 255, 255, 0.04);
+  --glass-border: rgba(255, 255, 255, 0.06);
+  --overlay-from: rgba(12, 12, 15, 0.85);
+  --overlay-via: rgba(12, 12, 15, 0.5);
+  --overlay-to: #0c0c0f;
+  --input-bg: rgba(255, 255, 255, 0.05);
+  --input-border: rgba(255, 255, 255, 0.1);
+  --scrollbar-track: #0c0c0f;
+  --scrollbar-thumb: #6366f1;
+  --grain-opacity: 0.03;
+  color-scheme: dark;
+}
+
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+  }
+
+  body {
+    background-color: var(--cinema-black);
+    color: var(--text-primary);
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  ::selection {
+    background-color: var(--cinema-accent);
+    color: #ffffff;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: 9999px;
+  }
+}
+
+@layer components {
+  .section-padding {
+    @apply px-6 md:px-12 lg:px-20 xl:px-32 py-24 md:py-32;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3rem, 8vw, 6rem);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text-primary);
+  }
+
+  .section-subtitle {
+    color: var(--cinema-muted);
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .gradient-text {
+    background: linear-gradient(135deg, var(--cinema-accent), var(--cinema-gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .accent-line {
+    height: 2px;
+    background: linear-gradient(90deg, var(--cinema-accent), var(--cinema-gold), transparent);
+  }
+
+  .glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 1rem;
+    transition: background 0.3s ease, border-color 0.3s ease;
+  }
+
+  .hover-lift {
+    @apply transition-transform duration-500 hover:-translate-y-2;
+  }
+
+  .film-grain {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: var(--grain-opacity);
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Theme toggle animation */
+  .theme-toggle {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 9999px;
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+
+  .theme-toggle:hover {
+    border-color: var(--cinema-accent);
+    transform: scale(1.05);
+  }
+
+  .theme-toggle svg {
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+}
